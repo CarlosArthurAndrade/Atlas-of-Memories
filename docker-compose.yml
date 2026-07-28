@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  mysqldb:
+    container_name: sqlcontainer
+    image: mysql:8.3.0
+    restart: always
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_DATABASE: usersdb
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: rootuser
+    volumes:
+      - mysql-volume:/var/lib/mysql
+      - ./Backend/db_init:/docker-entrypoint-initdb.d
+  backend:
+    build: ./Backend
+    ports:
+      - 3001:3001
+    env_file:
+      - ./Backend/.env
+    environment:
+      - DB_USER=rootuser
+      - DB-PASS=rootpassword
+      - DB_PORT=3306
+      - DB_NAME=usersdb
+      - DB_HOST=mysqldb
+    volumes:
+      - ./Backend:/app-backend
+      - /app-backend/node_modules
+    restart: always
+    depends_on:
+      - mysqldb
+  # frontend:
+  #   build: ./Frontend
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     NODE_ENV: production
+  #   volumes:
+  #     - .:/Frontend/app
+  #     - /Frontend/app/node_modules
+volumes:
+  mysql-volume:
+    driver: local

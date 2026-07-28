@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .bg-fuchsia {
+    background-color: rgb(124, 92, 191);
+  }
+
+  .bg-light-fuchsia{
+    background-color: rgb(238, 231, 247);
+  }
+
+  .bg-selected-menu-button {
+    background-color: rgb(201, 184, 239);
+  }
+
+  .bg-green-alert {
+    background-color: rgb(192, 240, 147);
+  }
+
+  .bg-green-bar {
+    background-color: rgb(107, 194, 0);
+  }
+
+  .bg-red-bar {
+    background-color: rgb(184, 25, 35);
+  }
+
+  .bg-note {
+    background-color: rgb(249, 241, 255);
+  }
+
+  .text-light-fuchsia {
+    color: rgb(175, 167, 191);
+  }
+
+  .color-favorite-icon {
+    color: rgb(255, 218, 145);
+  }
+}
+
+@keyframes timer {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
