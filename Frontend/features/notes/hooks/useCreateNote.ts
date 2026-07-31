@@ -12,9 +12,17 @@ export default function useCreateNoteModal() {
         }
     }
 
+    const isFormInvalid = () => {
+        if(intputTitleValue.length < 1 || inputTextareaValue.length < 1){
+            return true
+        }
+        return false
+    }
+
     return {
         intputTitleValue,
         inputTextareaValue,
-        onchangeInput
+        onchangeInput,
+        isFormInvalid
     }
 }

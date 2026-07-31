@@ -34,6 +34,7 @@ export default function NotesPageComponent() {
         cancelChangeUsername,
         setShowUsernameModal,
         setShowMobileSidebar,
+        divRef,
         ...modals
     } = useNotes()
     
@@ -93,9 +94,10 @@ export default function NotesPageComponent() {
                         openCreateModal={modals.openCreateModal}
                         setShowUserMenu={setShowUserMenu}
                         showUserMenu={showUserMenu}
-                        closeMenu={setShowMobileSidebar}
+                        setShowMobileSidebar={setShowMobileSidebar}
                         logout={logout}
                         username={username!}
+                        divRef={divRef}
                     />
                 }
             </AnimatePresence>

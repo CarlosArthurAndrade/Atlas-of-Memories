@@ -12,9 +12,12 @@ const lato = Lato({
     subsets: ['latin']
 })
 
-export default function NewNoteButton({ openCreateNoteModal }: { openCreateNoteModal: () => void }) {
+export default function NewNoteButton({ openCreateNoteModal, setShowMobileSidebar }: { openCreateNoteModal: () => void, setShowMobileSidebar?: (boolean: boolean) => void }) {
     return(
-        <button className={`${prata.className} w-full bold bg-fuchsia px-2 py-3 flex items-center rounded-xl text-white text-sm`} onClick={() => openCreateNoteModal()}>
+        <button className={`${prata.className} w-full bold bg-fuchsia px-2 py-3 flex items-center rounded-xl text-white text-sm`} onClick={() => {
+            setShowMobileSidebar && setShowMobileSidebar(false)
+            openCreateNoteModal()
+        }}>
             <AiOutlinePlus size={20} color="white" className="mx-3"/>
             Nova anotação
         </button>

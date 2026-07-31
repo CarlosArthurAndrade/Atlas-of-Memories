@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { useNotesData } from "./useNotesData"
@@ -11,6 +11,24 @@ export default function useNotes() {
     const [showUserMenu, setShowUserMenu] = useState(false)
     const [showMobileSidebar, setShowMobileSidebar] = useState<boolean>(false)
     const [showChangeUsernameModal, setShowUsernameModal] = useState(false)
+    const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        divRef.current &&
+        !divRef.current.contains(event.target as Node)
+      ) {
+        setShowMobileSidebar(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
     useEffect(() => {
         const userToken =
@@ -79,6 +97,7 @@ export default function useNotes() {
         openChangeUsername,
         cancelChangeUsername,
         setShowUsernameModal,
-        setShowMobileSidebar
+        setShowMobileSidebar,
+        divRef
     }
 }

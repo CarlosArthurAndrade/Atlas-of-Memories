@@ -1,4 +1,5 @@
 import { Note } from "@/interfaces/http/DataTypes"
+import { LegacyRef } from "react"
 
 export interface UpdateNoteDataTypes {
     title: string, 
@@ -96,5 +97,6 @@ export interface MobileSidebarPropTypes {
     showUserMenu: boolean, 
     logout: () => void, 
     setShowUserMenu: (boolean: boolean) => void
-    closeMenu: (boolean: boolean) => void
+    setShowMobileSidebar: (boolean: boolean) => void
+    divRef: LegacyRef<HTMLDivElement>
 }

@@ -13,9 +13,17 @@ export function useEditNote({ title, text }: EditNoteModalDataParams) {
         }
     }
 
+    const isFormInvalid = () => {
+        if(intputTitleValue.length < 1 || inputTextareaValue.length < 1){
+            return true
+        }
+        return false
+    }
+
     return {
         inputTextareaValue,
         intputTitleValue,
-        onchangeInput
+        onchangeInput,
+        isFormInvalid
     }
 }

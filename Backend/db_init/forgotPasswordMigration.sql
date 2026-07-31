@@ -1,8 +1,0 @@
-CREATE TABLE PasswordResetTokens
-(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    userId INT NOT NULL,
-    tokenHash VARCHAR(255) NOT NULL,
-    expiresAt DATETIME NOT NULL,
-    FOREIGN KEY(userId) REFERENCES Users(id) ON DELETE CASCADE
-);

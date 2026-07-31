@@ -17,33 +17,36 @@ export default function EditNoteModal({ onConfirm, onCancel, title, text, noteId
     const {
         inputTextareaValue,
         intputTitleValue,
-        onchangeInput
+        onchangeInput,
+        isFormInvalid
     } = useEditNote({ title, text })
 
     return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/50"
         onClick={onCancel}
       />
       <div className="relative bg-white p-6 rounded-xl shadow-lg z-10 w-[30rem] space-y-2">
         <h2 className={`${prata.className}`}>Edite sua anotação</h2>
         <div className="w-full flex flex-col space-y-2">
-            <p className={`${prata.className}`}>Titulo: </p>
+            <p className={`${prata.className}`}>Titulo<span className="text-red-500 text-lg">*</span>: </p>
             <input 
                 type="text" 
                 name="Title"
                 spellCheck={false}
                 className={`${lato.className} w-full py-2 px-4 text-sm border box-border`}
+                required
                 value={intputTitleValue} onChange={(event) => onchangeInput(event.target.value, event.target.name)}
             />
         </div>
         <div className="w-full flex flex-col space-y-2">
-            <p className={`${prata.className}`}>Texto: </p>
+            <p className={`${prata.className}`}>Texto<span className="text-red-500 text-lg">*</span>: </p>
             <textarea 
                 className={`${lato.className} w-full py-2 px-4 text-sm border box-border`}
                 name="Textarea"
                 spellCheck={false}
+                required
                 value={inputTextareaValue} onChange={(event) => onchangeInput(event.target.value, event.target.name)}
             />
         </div>
@@ -55,6 +58,7 @@ export default function EditNoteModal({ onConfirm, onCancel, title, text, noteId
             Cancelar
           </button>
           <button
+            disabled={isFormInvalid()}
             onClick={() => onConfirm(
               {
                 title: intputTitleValue,
@@ -65,7 +69,7 @@ export default function EditNoteModal({ onConfirm, onCancel, title, text, noteId
                 noteId
               }
             )}
-            className="px-4 py-2 bg-fuchsia text-white rounded"
+            className={`px-4 py-2 ${ isFormInvalid() ? 'bg-gray-500' : 'bg-fuchsia' } text-white rounded`}
           >
             Confirmar
           </button>

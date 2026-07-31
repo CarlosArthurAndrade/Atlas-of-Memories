@@ -24,17 +24,17 @@ const prata = Prata({
 })
 
 export default function MobileSidebar(
-    { closeMenu, selectMenuItem, username, selectedMenuItem, openCreateModal, openChangeUsername, showUserMenu, logout, setShowUserMenu }: MobileSidebarPropTypes) {
+    { setShowMobileSidebar, selectMenuItem, username, selectedMenuItem, openCreateModal, openChangeUsername, showUserMenu, logout, setShowUserMenu, divRef }: MobileSidebarPropTypes) {
     return(
         <motion.div
         initial={{ opacity: 0, x: -80}}
         animate={{ opacity: 1, x: 0}}
         exit={{ opacity: 0, x: -80}}
         className="w-[85%] md:w-2/5 bg-light-fuchsia box-border fixed inset-y-0 z-50 lg:hidden py-6 px-1 flex flex-col justify-between space-y-5">
-            <div className="space-y-4">
+            <div className="space-y-4" ref={divRef}>
                 <div className="flex items-start space-x-2 p-4">
                     <div>
-                        <IoClose onClick={() => closeMenu(false)} size={25} className="lg:hidden"/>
+                        <IoClose onClick={() => setShowMobileSidebar(false)} size={25} className="lg:hidden"/>
                     </div>
                     <div className="flex space-x-2">
                         <LuPencilLine size={30} color="white" className="bg-fuchsia p-2 rounded-lg"/>
@@ -42,7 +42,7 @@ export default function MobileSidebar(
                     </div>
                 </div>
                 <div className="w-full flex flex-col box-border px-5 space-y-8">
-                    <NewNoteButton openCreateNoteModal={openCreateModal}/>
+                    <NewNoteButton openCreateNoteModal={openCreateModal} setShowMobileSidebar={setShowMobileSidebar}/>
                     <div className="flex flex-col w-full items-start">
                         {
                             tagFilters.map((tag, index) => (

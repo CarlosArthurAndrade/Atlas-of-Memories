@@ -4,7 +4,7 @@ export default function DeleteNoteModal({ onConfirm, onCancel, selectedNoteId, s
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/50"
         onClick={onCancel}
       />
       <div className="relative bg-white p-6 rounded-xl shadow-lg z-10 w-80">

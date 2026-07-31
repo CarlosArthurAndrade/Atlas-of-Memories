@@ -1,1 +1,0 @@
-ALTER TABLE Notes MODIFY COLUMN messageText TEXT;

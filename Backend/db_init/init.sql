@@ -17,10 +17,19 @@ CREATE TABLE Notes
 (
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
-    messageText VARCHAR(255) NOT NULL,
+    messageText TEXT NOT NULL,
     favorite BOOLEAN NOT NULL DEFAULT FALSE,
     authorId INT NOT NULL,
     writingDate VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (authorId) REFERENCES Users(id) ON DELETE CASCADE
 ) AUTO_INCREMENT = 1;
+
+CREATE TABLE PasswordResetTokens
+(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    tokenHash VARCHAR(255) NOT NULL,
+    expiresAt DATETIME NOT NULL,
+    FOREIGN KEY(userId) REFERENCES Users(id) ON DELETE CASCADE
+);

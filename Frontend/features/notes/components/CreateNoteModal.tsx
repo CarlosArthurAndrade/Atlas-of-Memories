@@ -1,12 +1,7 @@
 import { CreateModalProps } from "@/interfaces/ui/ModalProps"
 import { motion } from "framer-motion"
 import useCreateNoteModal from "../hooks/useCreateNote"
-import { Prata, Barlow } from "next/font/google"
-
-const prata = Prata({
-        weight: '400',
-        subsets: ['latin']
-})
+import { Barlow } from "next/font/google"
 
 const barlow = Barlow({
   weight: '400',
@@ -17,7 +12,8 @@ export default function CreateNoteModal({ onConfirm, onCancel, token, setNotes, 
     const {
         intputTitleValue,
         inputTextareaValue,
-        onchangeInput
+        onchangeInput,
+        isFormInvalid
     } = useCreateNoteModal()
 
     return (
@@ -33,7 +29,7 @@ export default function CreateNoteModal({ onConfirm, onCancel, token, setNotes, 
       <div className="relative bg-white p-6 rounded-xl shadow-lg z-10 w-[30rem] space-y-2">
         <h2>Crie uma nova anotação</h2>
         <div className="w-full flex flex-col space-y-2">
-            <p>Titulo: </p>
+            <p>Titulo<span className="text-red-500 text-lg">*</span>: </p>
             <input 
                 type="text" 
                 name="Title"
@@ -43,7 +39,7 @@ export default function CreateNoteModal({ onConfirm, onCancel, token, setNotes, 
             />
         </div>
         <div className="w-full flex flex-col space-y-2">
-            <p>Texto: </p>
+            <p>Texto<span className="text-red-500 text-lg">*</span>: </p>
             <textarea 
                 className={`${barlow.className} w-full py-2 px-4 text-sm border box-border`}
                 name="Textarea"
@@ -59,6 +55,7 @@ export default function CreateNoteModal({ onConfirm, onCancel, token, setNotes, 
             Cancelar
           </button>
           <button
+            disabled={isFormInvalid()}
             onClick={() => onConfirm(
               {
                 title: intputTitleValue,
@@ -68,7 +65,7 @@ export default function CreateNoteModal({ onConfirm, onCancel, token, setNotes, 
                 setShowCreateNoteModal
               }
             )}
-            className="px-4 py-2 bg-fuchsia text-white rounded"
+            className={`px-4 py-2 ${ isFormInvalid() ? 'bg-gray-500' : 'bg-fuchsia' } text-white rounded`}
           >
             Confirmar
           </button>
