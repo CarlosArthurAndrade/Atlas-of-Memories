@@ -34,13 +34,13 @@ services:
     restart: always
     depends_on:
       - mysqldb
-  # frontend:
-  #   build: ./Frontend
-  #   ports:
-  #     - 3000:3000
-  #   volumes:
-  #     - .:/Frontend/app
-  #     - /Frontend/app/node_modules
+  frontend:
+    build: ./Frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/Frontend/app
+      - /Frontend/app/node_modules
 volumes:
   mysql-volume:
     driver: local
