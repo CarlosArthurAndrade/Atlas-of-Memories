@@ -29,7 +29,7 @@ usersRoutes.route('/select-by-id')
 usersRoutes.route('/find-token')
     .post(findResetToken)
 
-usersRoutes.route('delete-token')
+usersRoutes.route('/delete-token')
     .delete(deleteResetToken)
 
 usersRoutes.route('/save-token')

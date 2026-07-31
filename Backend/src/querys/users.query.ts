@@ -7,5 +7,5 @@ export const QUERY = {
     CHANGE_USER_USERNAME: 'UPDATE Users SET username = ? WHERE id = ?',
     SAVE_RESET_TOKEN: 'INSERT INTO PasswordResetTokens (userId, tokenHash, expiresAt) VALUES(?, ?, ?)',
     SELECT_TOKENHASH: 'SELECT * FROM PasswordResetTokens WHERE tokenHash = ?',
-    DELETE_TOKENHASH: 'DELETE * FROM PasswordResetTokens WHERE id = ?'
+    DELETE_TOKENHASH: 'DELETE FROM PasswordResetTokens WHERE id = ?'
 }

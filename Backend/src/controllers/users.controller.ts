@@ -37,7 +37,7 @@ export const getUserById = async (req: UserAuthRequest, res: Response): Promise<
         const pool = await connection();
         const [rows] = await pool.query<UserReturn[]>(QUERY.SELECT_USER_ID, [id]);
         if(rows[0]){
-            return res.status(Code.OK).send(new HttpResponse<UserReturn>(Code.OK, Status.OK, 'Usuário encontrado', rows[0] ));
+            return res.status(Code.OK).send(new HttpResponse(Code.OK, Status.OK, 'Usuário encontrado', { username: rows[0].username, email: rows[0].email } ));
         } else {
             return res.status(Code.NOT_FOUND).send(new HttpResponse(Code.NOT_FOUND, Status.NOT_FOUND, 'Usuário não encontrado', []))
         }
@@ -57,7 +57,7 @@ export const createUser = async (req: UserAuthRequest, res: Response): Promise<R
         } else {
             const hashPassword = await bcrypt.hash(password, 10);
             const [rows] = await pool.query<UserReturn[]>(QUERY.CREATE_USER, [username, email, hashPassword])
-            return res.status(Code.OK).send(new HttpResponse<UserReturn>(Code.OK, Status.OK, 'Usuário cadastrado', rows[0]));
+            return res.status(Code.OK).send(new HttpResponse<UserReturn>(Code.OK, Status.OK, 'Usuário cadastrado'));
         }
     } catch(error: unknown) {
         console.error(error)
@@ -85,8 +85,8 @@ export const changeUserPassword = async (req: UserAuthRequest, res: Response) =>
     const hashPassword = await bcrypt.hash(newPassword, 10);
     try {
         const pool = await connection();
-        await pool.query(QUERY.CHANGE_USER_PASSWORD, [hashPassword, userId])
-        return res.status(Code.OK).send(new HttpResponse<UserReturn>(Code.OK, Status.OK, 'Senha alterada'));
+        const [rows] = await pool.query(QUERY.CHANGE_USER_PASSWORD, [hashPassword, userId])
+        return res.status(Code.OK).send(new HttpResponse(Code.OK, Status.OK, 'Senha alterada', { newPassword, hashPassword, rows }));
     } catch(err) {
         return res.status(Code.INTERNAL_SERVER_ERROR).send(new HttpResponse(Code.INTERNAL_SERVER_ERROR, Status.INTERNAL_SERVER_ERROR, 'Ocorreu um erro', err))
     }
@@ -112,7 +112,7 @@ export const saveResetToken = async (req: UserAuthRequest, res: Response) => {
 
     try {
         const pool = await connection();
-        await pool.query(QUERY.SAVE_RESET_TOKEN, [userId, tokenHash, expiresAt])
+        const [_rows] = await pool.query(QUERY.SAVE_RESET_TOKEN, [userId, tokenHash, expiresAt])
         sendResetEmail(emailInputValue, token)
         res.status(Code.OK).send(new HttpResponse(Code.OK, Status.OK))
     } catch (err) {
@@ -128,7 +128,7 @@ export const findResetToken = async (req: UserAuthRequest, res: Response) => {
         const pool = await connection();
         const [rows] = await pool.query<PasswordResetToken[]>(QUERY.SELECT_TOKENHASH, [tokenHash])
         if(rows[0]){
-            res.status(Code.OK).send(new HttpResponse(Code.OK, Status.OK, 'Token Encontrado', { id: rows[0].id, userid: rows[0].userId }))
+            res.status(Code.OK).send(new HttpResponse(Code.OK, Status.OK, 'Token Encontrado', { id: rows[0].id, userId: rows[0].userId }))
         } else {
             return res.status(Code.NOT_FOUND).send(new HttpResponse(Code.NOT_FOUND, Status.NOT_FOUND, 'Token não encontrado ou inválido'))
         }
@@ -142,7 +142,7 @@ export const deleteResetToken = async (req: UserAuthRequest, res: Response) => {
     try {
         const pool = await connection();
         const [rows] = await pool.query<PasswordResetToken[]>(QUERY.DELETE_TOKENHASH, [id])
-        res.status(Code.OK).send(new HttpResponse(Code.OK, Status.OK, 'Token Encontrado', rows[0]))
+        res.status(Code.OK).send(new HttpResponse(Code.OK, Status.OK, 'Token deletado com sucesso', rows[0]))
     } catch (err) {
         res.status(Code.INTERNAL_SERVER_ERROR).send(new HttpResponse(Code.INTERNAL_SERVER_ERROR, Status.INTERNAL_SERVER_ERROR, 'Ocorreu um erro'))
     }
