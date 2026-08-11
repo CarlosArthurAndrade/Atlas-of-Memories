@@ -55,7 +55,7 @@ git clone https://github.com/CarlosArthurAndrade/Atlas-of-Memories.git
 ```
 ### 2. Acesse a pasta do projeto
 ```bash
-cd atlas-of-memories
+cd Atlas-of-Memories
 ```
 ### 3. Configure as variáveis de ambiente
 Crie o arquivo `.env` no backend seguindo as instruções do env.exemplo.
